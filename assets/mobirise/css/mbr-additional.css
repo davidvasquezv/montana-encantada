@@ -965,6 +965,9 @@ section.lazy-placeholder:after {
   .cid-rzMjemu9Q2 .title {
     width: 100% !important;
   }
+  .cid-rzMjemu9Q2 .mbr-section-title {
+    font-size: 1.5rem !important;
+  }
 }
 .cid-rzMje2wxrY {
   padding-top: 0px;
@@ -973,6 +976,13 @@ section.lazy-placeholder:after {
 }
 .cid-rzMje2wxrY .mbr-text {
   text-align: center;
+  line-height: 1.8;
+}
+@media (max-width: 767px) {
+  .cid-rzMje2wxrY .mbr-text {
+    font-size: 0.85rem !important;
+    padding: 0 10px;
+  }
 }
 .cid-rzMk2pOnIb {
   padding-top: 60px;

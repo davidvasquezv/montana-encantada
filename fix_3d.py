@@ -212,6 +212,36 @@ def fix_menu(filename):
 fix_menu('domo.html')
 fix_menu('cabana.html')
 
+# Fix footer position in domo.html and cabana.html (move to end)
+def fix_footer(filename):
+    with open(filename, 'r', encoding='utf-8') as f:
+        html = f.read()
+    import re
+    footer_match = re.search(r'<section class="footer2[^>]*>.*?</section>', html, re.DOTALL)
+    if not footer_match:
+        print(f"  {filename}: footer not found, skipping")
+        return
+    footer_html = footer_match.group(0)
+    # Check if footer is already at the end (before scripts)
+    after_footer = html[footer_match.end():].strip()
+    if after_footer.startswith('<section class="gallery') or after_footer.startswith('<section class="mbr-section"'):
+        # Footer is not at the end, move it
+        html_without_footer = html[:footer_match.start()] + html[footer_match.end():]
+        # Insert before closing </body> or before final scripts
+        insert_point = '</body>'
+        if insert_point in html_without_footer:
+            html_without_footer = html_without_footer.replace(insert_point, footer_html + '\n' + insert_point)
+            with open(filename, 'w', encoding='utf-8') as f:
+                f.write(html_without_footer)
+            print(f"  {filename}: footer moved to bottom ✓")
+        else:
+            print(f"  {filename}: </body> not found!")
+    else:
+        print(f"  {filename}: footer already at bottom, skipping")
+
+fix_footer('domo.html')
+fix_footer('cabana.html')
+
 # Fix guests counter in index.html
 def fix_guests(filename):
     with open(filename, 'r', encoding='utf-8') as f:
